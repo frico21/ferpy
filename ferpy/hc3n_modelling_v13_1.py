@@ -4,6 +4,7 @@
 Created on Sun Jun  3 13:27:06 2018
 
 @author: frico
+python 3.7.1
 """
 version = '2'
 
@@ -88,9 +89,9 @@ def models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
                     #print '\n\tModel Name already used, change it:'
                     #model_name_list[0] = raw_input('Enter new name:\t')
                     while df_sum['model'].str.contains(model_name_list[0].split('.inp')[0]).any():
-                        print '\n\tModel Name already used, change it:'
+                        print('\n\tModel Name already used, change it:')
                         model_name_list[0] = raw_input('Enter new name:\t')
-            print '\t\t'+model_name_list[0]
+            print('\t\t'+model_name_list[0])
         # Transforming model parameters
         #tlist = [100,150,200,250,300,350,400,450,500,550,600]
         #factor = [0.7]*len(tlist)#[0.7,0.35]
@@ -117,7 +118,7 @@ def models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
     
         ########## Generating Temperature Gradient ################
         tdust_gradient = []
-        print '\nModel Parameters:'
+        print('\nModel Parameters:')
         for i, rad in enumerate(radio_list):
             if gradient == 'manual' or gradient == 'manual_dens':
                 tdust_gradient.append(np.round(Tdust_mod[i],3))
@@ -136,9 +137,9 @@ def models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
             #print Ncols_lists[1][i]
             #print tdust_gradient[i]
             
-            print str(i+1)+':\t nH = '+ '%1.2E' % dens_profile[i]+'\tXd = '+ '%1.2E ' % abun_dust[i] +'\tNd = '+ '%1.2E ' % Ncols_lists[0][i] +'\t Xm = '+ '%1.2E ' % abun_line[i]+'\tNm = '+ '%1.2E ' % Ncols_lists[1][i] +'\t T= '+'%1.2f ' % ttt_st
-        print 'Mean\tnH = '+'%1.2E' % dens_mean + ' \tRef Mean\tnH = '+'%1.2E' % dens_mean_or
-        print '\tNd_tot = '+'%1.2E' % Ncols_tots[0] + ' \tNdmtot = '+'%1.2E' % Ncols_tots[1]
+            print(str(i+1)+':\t nH = '+ '%1.2E' % dens_profile[i]+'\tXd = '+ '%1.2E ' % abun_dust[i] +'\tNd = '+ '%1.2E ' % Ncols_lists[0][i] +'\t Xm = '+ '%1.2E ' % abun_line[i]+'\tNm = '+ '%1.2E ' % Ncols_lists[1][i] +'\t T= '+'%1.2f ' % ttt_st)
+        print('Mean\tnH = '+'%1.2E' % dens_mean + ' \tRef Mean\tnH = '+'%1.2E' % dens_mean_or)
+        print('\tNd_tot = '+'%1.2E' % Ncols_tots[0] + ' \tNdmtot = '+'%1.2E' % Ncols_tots[1])
     
         ########## Turbulence Velocity ################
         vturb = [vturbulence]*len(radio_list)
@@ -158,7 +159,7 @@ def models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
     central_dens_list = []
     rad_profile_list = []
     central_temp_list = []
-    print '\nRunning model:'
+    print('\nRunning model:')
     for i, m_name in enumerate(model_name_list):
         if only_pars == False:
             mod_name = radtransf_hc3n.model_builder(results_path=results_path, model_name=m_name,
@@ -166,7 +167,7 @@ def models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
                         tgas=tdust_gradient, tdust=tdust_gradient, vturb=vturb)
         else:
             mod_name = m_name.split('.inp')[0] 
-        print '\t'+mod_name
+        print('\t'+mod_name)
         
         
         #mod_name = radtransf_hc3n.model_conv_sing(results_path=results_path, reference_model=reference_model, run_ref_only=run_ref_only,
@@ -180,16 +181,16 @@ def models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
                                                                                                              figoutdir=results_path+'/figures', fig_format='png')
         
             
-            print '\n Comparing values HC14 - Factor'+factor_names[f]+':'
-            print 'Modelled:\tL='+ '%1.2E' % luminosity_total+'\tv0_24-23='+ '%1.2f ' % peak_v0_24_23 +'\tv0_39-38='+ '%1.2f ' % peak_v0_39_38+'\tv7_24-23='+'%1.2f ' % peak_v7_24_23+'\tv7_39-38='+'%1.2f' % peak_v7_39_38
-            print 'Observed:\tL='+ '%1.2E' % luminosity_total_obs+'\tv0_24-23='+ '%1.2f ' % peak_v0_24_23_obs +'\tv0_39-38='+ '%1.2f ' % peak_v0_39_38_obs+'\tv7_24-23='+'%1.2f ' % peak_v7_24_23_obs+'\tv7_39-38='+'%1.2f ' % peak_v7_39_38_obs
-            print '\n'
+            print('\n Comparing values HC14 - Factor'+factor_names[f]+':')
+            print('Modelled:\tL='+ '%1.2E' % luminosity_total+'\tv0_24-23='+ '%1.2f ' % peak_v0_24_23 +'\tv0_39-38='+ '%1.2f ' % peak_v0_39_38+'\tv7_24-23='+'%1.2f ' % peak_v7_24_23+'\tv7_39-38='+'%1.2f' % peak_v7_39_38)
+            print('Observed:\tL='+ '%1.2E' % luminosity_total_obs+'\tv0_24-23='+ '%1.2f ' % peak_v0_24_23_obs +'\tv0_39-38='+ '%1.2f ' % peak_v0_39_38_obs+'\tv7_24-23='+'%1.2f ' % peak_v7_24_23_obs+'\tv7_39-38='+'%1.2f ' % peak_v7_39_38_obs)
+            print('\n')
             ratio_2423 = peak_v0_24_23/peak_v7_24_23
             ratio_3938 = peak_v0_39_38/peak_v7_39_38
             ratio_v0 = peak_v0_39_38/peak_v0_24_23
             ratio_v7 = peak_v7_39_38/peak_v7_24_23
-            print 'Modelled:\tR_24-23='+ '%1.2f' % ratio_2423+'\tR_39-38='+ '%1.2f ' % ratio_3938 +'\tR_v0='+ '%1.2f ' % ratio_v0+'\tR_v7='+'%1.2f ' % ratio_v7
-            print 'Observed:\tR_24-23='+ '%1.2f' % ratio_2423_obs+'\tR_39-38='+ '%1.2f ' % ratio_3938_obs +'\tR_v0='+ '%1.2f ' % ratio_v0_obs+'\tR_v7='+'%1.2f ' % ratio_v7_obs
+            print('Modelled:\tR_24-23='+ '%1.2f' % ratio_2423+'\tR_39-38='+ '%1.2f ' % ratio_3938 +'\tR_v0='+ '%1.2f ' % ratio_v0+'\tR_v7='+'%1.2f ' % ratio_v7)
+            print('Observed:\tR_24-23='+ '%1.2f' % ratio_2423_obs+'\tR_39-38='+ '%1.2f ' % ratio_3938_obs +'\tR_v0='+ '%1.2f ' % ratio_v0_obs+'\tR_v7='+'%1.2f ' % ratio_v7_obs)
         
             model_names.append(mod_name)
             luminosity_total_list.append(luminosity_total)
@@ -280,27 +281,41 @@ profile_list    =   [0.0]
 # =============================================================================
 """
  Luminosity for HC if size = 0.1
- luminosity  = 1.965718e+10#1.687e9
  """
 luminosity_list  = [5e8, 7e8, 9e8, 1e9, 1.5e9, 2.0, 2.9e9]    
 gradient = 'manual_dens' #'tgrad' #'manual' #False # Gradient temperature
-Tdust_mod = 150 #[350]*len(radio_list)#[450, 450, 300, 300, 250, 250, 200, 200, 200, 150] # Temperature gradient if Tdust_mod = False or manual
-Tdust_mod_list = [[300]*len(radio_list)]#[[100]*len(radio_list), [150]*len(radio_list), [200]*len(radio_list), [250]*len(radio_list),[300]*len(radio_list), [350]*len(radio_list), [400]*len(radio_list), [450]*len(radio_list), [500]*len(radio_list), [550]*len(radio_list), [600]*len(radio_list)]#[300]*len(radio_list)]#, [150]*len(radio_list), [200]*len(radio_list), [250]*len(radio_list), [250]*len(radio_list), [350]*len(radio_list), [400]*len(radio_list), [400]*len(radio_list)]#[[50]*len(radio_list), [100]*len(radio_list), [150]*len(radio_list), [250]*len(radio_list), [300]*len(radio_list), [350]*len(radio_list),
-                 # [400]*len(radio_list), [450]*len(radio_list), [500]*len(radio_list), [550]*len(radio_list), [600]*len(radio_list)]#[250, 300, 350, 400, 450, 500, 550, 600]
-
-
+Tdust_mod = 150  # Temperature gradient if Tdust_mod = False or manual
+Tdust_mod_list = [[300]*len(radio_list)]
+"""
+Tlist = [[100]*len(radio_list), [150]*len(radio_list),
+ [200]*len(radio_list), [250]*len(radio_list),
+ [300]*len(radio_list), [350]*len(radio_list),
+ [400]*len(radio_list), [450]*len(radio_list),
+ [500]*len(radio_list), [550]*len(radio_list),
+ [600]*len(radio_list)]
+"""
+# =============================================================================
+#  Abundances
+# =============================================================================
 # Desired Dust abundances:
 abund_dust_list = [1E-2]
 
 # Desired HC3N abundances:
 low_abun = [1E-7,1E-8, 1E-9, 1E-10]
 high_abun = [5E-6, 5E-7, 1E-7, 5E-8]
-abund_hc3n_list = [5E-6, 5E-7, 1E-7, 5E-8, 1E-8, 1E-9, 1E-10]#[5E-6, 5E-7]#, 5E-8, 1E-7, 1E-8, 1E-9, 1E-10]
+abund_hc3n_list = [5E-6, 5E-7, 1E-7, 5E-8, 1E-8, 1E-9, 1E-10]
 
-# Cloud total radius
+
+# =============================================================================
+#  Cloud Size
+# =============================================================================
+# Cloud total radius (cm)
 rnube = 3.086E18
 
 
+# =============================================================================
+#  Column densities
+# =============================================================================
 # Column densities to keep reasonable HC3N and dust abundances
 Nhc3n = {}
 Ndust= {}
@@ -320,254 +335,97 @@ for hh, nh in enumerate(start_dens_list):
     for o, col in enumerate(obs_col):
         Xhc3n['%1.1E' %nh]['%1.2E' % col] = col/(nh*rnube)
     
+
+
 """
 Getting only pars
 """    
 get_pars_only = False
+"""
+Ed model parameters:
+    Td=Tgas
+    nH2
+    Ndust
+    Nmolec
+    Tamaño
+"""
+# =============================================================================
+#  Starting Model runner
+# =============================================================================
 ############ Model Runner ########################
 if modelling == True:
-    factor_names = ['07', '035']
-    factors_array = [0.7, 0.35]
-    version = '13_a'
-    # Building models from abunds or from col_dens
-    build_from_abun = True
-    # Plotting
+    
+    version = '14_a'        # Version to name the models folder
+    build_from_abun = True  # Building models from abunds or from col_dens
+    vturbulence = 20.0      # Turbulence velocity
+    abun_from_col = True    # Abundances from column densities
+    
+    # Plotting options
     plot_profiles, plot_SED = False, False
     # Runing only reference model
     run_ref_only = False #[True,reference_model] # else: False
-    # V turbulence
-    vturbulence = 20.0
-    # Abund from col dens
-    abun_from_col = True#True
     
-        
-    if gradient == 'grad_old':
-        #for tt, Tdust_mod in enumerate(Tdust_mod_list):
-        version = version + '_tgrad'
-        if build_from_abun==True: # Building from abundances
-            ref_colmol_list = abund_hc3n_list
-            ref_coldust_list = abund_dust_list
-            string = 'X'
-        else:
-            ref_coldust_list = abund_dust_list
-            string = 'N'
-        
-        for cm, ref_colmol in enumerate(ref_colmol_list):
-                for r, profile in enumerate(profile_list):
-                    ## Results path
-                    results_path = '/Users/frico/Documents/Ed/modelos_hc3n/v'+version+'/r_'+'%1.1f' % profile +'_'+string+'%1.2E'  % ref_colmol
-                    # Removing previous model summary if only updating pars summary
-                    if get_pars_only == True:
-                        for f, factor in enumerate(factors_array):
-                            os.rename(results_path+'/models_summary_'+factor_names[f]+'.txt', results_path+'/models_summary_'+factor_names[f]+'_old.txt')
-                    for cd, ref_coldust in enumerate(ref_coldust_list):
-                        for ro, start_dens in enumerate(start_dens_list):
-                            for lum, luminosity in enumerate(luminosity_list):
-                                td = m_calc.tdust_devicente(luminosity, radio_list[0], gradient, Tdust_mod)
-                                model_name_list = ['mhc3n_r'+'%1.1f' % profile +'_n'+'%1.2E' % start_dens +'_T'+'%1.f' % td+'.inp'] # With the .inp
-                            
-                                print '\n\tMean Density: '+'%1.3E'  % start_dens
-                                print '\tProfile: '+'%1.3E'  % profile
-                                if build_from_abun==False:
-                                        print '\tNd: '+'%1.3E'  % ref_coldust+'\tNHC3N: '+'%1.3E'  % ref_colmol
-                                else:
-                                        Ndddd = rnube*ref_coldust*start_dens
-                                        Nmolll = rnube*ref_colmol*start_dens
-                                        print '\tXd: '+'%1.3E'  % ref_coldust+'\tXHC3N: '+'%1.3E'  % ref_colmol
-                                        print '\tNd: '+'%1.3E'  % Ndddd+'\tNHC3N: '+'%1.3E'  % Nmolll
-                                print '\tLuminosity: '+'%1.3E'  % luminosity
-                                a = models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
-                                               gradient, Tdust_mod, vturbulence, factor_names, factors_array,
-                                               run_ref_only, plot_profiles, plot_SED,
-                                               model_name_list, results_path, build_from_abun, only_pars=get_pars_only
-                                               )
-                                a = 0
-                                gc.collect()
-                                print '\tMemory Usage:'+str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-                                
-    elif gradient == True:
-        #for tt, Tdust_mod in enumerate(Tdust_mod_list):
-        version = version + '_tgrad_L'
-        if abun_from_col == True and build_from_abun==True:
-            decimals = 1
-            ref_colmol_list = obs_col
-            ref_coldust_list = dust_col
-            string = 'X'
-        else:
-            string = 'N'
-        
-        for r, profile in enumerate(profile_list):
-            for lum, luminosity in enumerate(luminosity_list):
-            #for tt, Tdust_mod in enumerate(Tdust_mod_list):
-                td = m_calc.tdust_devicente(luminosity, radio_list[0], gradient, Tdust_mod)
-                #td = luminosity
-                ## Results path
-                results_path = '/Users/frico/Documents/Ed/modelos_hc3n/v'+version+'/r_'+'%1.1f' % profile+'/r_'+'%1.1f' % profile +'_L'+'%1.2E'  % luminosity
-                # Removing previous model summary if only updating pars summary
-                if os.path.isdir(results_path):
-                    if get_pars_only == True:
-                        for f, factor in enumerate(factors_array):
-                            ffile = results_path+'/models_summary_'+factor_names[f]+'.txt'
-                            if os.path.isfile(ffile):
-                                os.rename(ffile, results_path+'/models_summary_'+factor_names[f]+'_old.txt')
-                        a = models_run(start_dens=0, profile=profile, ref_coldust=0, ref_colmol=0, luminosity=0,
-                                           gradient=0, Tdust_mod=0, vturbulence=0, factor_names=factor_names, factors_array=factors_array,
-                                           run_ref_only=0, plot_profiles=plot_profiles, plot_SED=plot_SED,
-                                           model_name_list=0, results_path=results_path, build_from_abunds=0, only_pars=get_pars_only
-                                           )
-                for ro, start_dens in enumerate(start_dens_list):
-                        for cd, ref_coldust in enumerate(ref_coldust_list):
-                            abun_d = ref_coldust/(start_dens*rnube)
-                            abund_dust = utiles.rounding_exp(abun_d, decimals)
-                            
-                            
-                            for cm, ref_colmol in enumerate(ref_colmol_list):
-                                abun = ref_colmol/(start_dens*rnube)
-                                abund_hc3n = utiles.rounding_exp(abun, decimals)
-                                #for lum, luminosity in enumerate(luminosity_list):
-                                #for tt, Tdust_mod in enumerate(Tdust_mod_list):
-                                
-                                #luminosity = 1e9 # Luminosity without Tgrad is not relevant
-                                model_name_list = ['mhc3n_r'+'%1.1f' % profile +'_Nd'+'%1.2E' % ref_coldust+'_X'+'%1.2E' % abund_hc3n +'_nH'+'%1.2E' % start_dens+'.inp'] # With the .inp
-                                if get_pars_only == False:
-                                    if os.path.isfile(results_path+'/'+model_name_list[0]):
-                                        print 'Model already ran...'
-                                    else:   
-                                        print '\n\tStart Density: '+'%1.3E'  % start_dens
-                                        print '\tProfile: '+'%1.3E'  % profile
-                                        print '\tNd: '+'%1.3E'  % abund_dust+'\tNHC3N: '+'%1.3E'  % abund_hc3n
-                                        Ndddd = rnube*abund_dust*start_dens
-                                        Nmolll = rnube*abund_hc3n*start_dens
-                                        print '\tXd: '+'%1.3E'  % abund_dust+'\tXHC3N: '+'%1.3E'  % abund_hc3n
-                                        print '\tNd: '+'%1.3E'  % Ndddd+'\tNHC3N: '+'%1.3E'  % Nmolll
-                                            
-                                        print '\tLuminosity: '+'%1.3E'  % luminosity
-                                        a = models_run(start_dens, profile, abund_dust, abund_hc3n, luminosity,
-                                                       gradient, Tdust_mod, vturbulence, factor_names, factors_array,
-                                                       run_ref_only, plot_profiles, plot_SED,
-                                                       model_name_list, results_path, build_from_abun, only_pars=get_pars_only
-                                                       )
-                                        a = 0
-                                        gc.collect()
-                                        print '\tMemory Usage:'+str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-#                                else:   
-#                                    print '\n\tStart Density: '+'%1.3E'  % start_dens
-#                                    print '\tProfile: '+'%1.3E'  % profile
-#                                    print '\tNd: '+'%1.3E'  % abund_dust+'\tNHC3N: '+'%1.3E'  % abund_hc3n
-#                                    Ndddd = rnube*abund_dust*start_dens
-#                                    Nmolll = rnube*abund_hc3n*start_dens
-#                                    print '\tXd: '+'%1.3E'  % abund_dust+'\tXHC3N: '+'%1.3E'  % abund_hc3n
-#                                    print '\tNd: '+'%1.3E'  % Ndddd+'\tNHC3N: '+'%1.3E'  % Nmolll
-#                                        
-#                                    print '\tLuminosity: '+'%1.3E'  % luminosity
-#                                    a = models_run(start_dens, profile, abund_dust, abund_hc3n, luminosity,
-#                                                   gradient, Tdust_mod, vturbulence, factor_names, factors_array,
-#                                                   run_ref_only, plot_profiles, plot_SED,
-#                                                   model_name_list, results_path, build_from_abun, only_pars=get_pars_only
-#                                                   )
-#                                    a = 0
-#                                    gc.collect()
-                                    print '\tMemory Usage:'+str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-                                
-                            
-    elif gradient == 'manual':
-        #for tt, Tdust_mod in enumerate(Tdust_mod_list):
-        version = version + '_tcte2'
-        if build_from_abun==True: # Building from abundances
-            ref_colmol_list = abund_hc3n_list
-            ref_coldust_list = abund_dust_list
-            string = 'X'
-        else:
-            string = 'N'
-        
-        
-        
-        
+    factor_names = ['07', '035'] # Factors to get luminosity or line intensities #### MAAL
+    factors_array = [0.7, 0.35]
     
-        for cm, ref_colmol in enumerate(ref_colmol_list):
-                for r, profile in enumerate(profile_list):
-                    ## Results path
-                    results_path = '/Users/frico/Documents/Ed/modelos_hc3n/v'+version+'/r_'+'%1.1f' % profile +'_'+string+'%1.2E'  % ref_colmol
-                    # Removing previous model summary if only updating pars summary
-                    if os.path.isdir(results_path):
-                        if get_pars_only == True:
-                            for f, factor in enumerate(factors_array):
-                                os.rename(results_path+'/models_summary_'+factor_names[f]+'.txt', results_path+'/models_summary_'+factor_names[f]+'_old.txt')
-                    for cd, ref_coldust in enumerate(ref_coldust_list):
-                        for ro, start_dens in enumerate(start_dens_list):
-                            #for lum, luminosity in enumerate(luminosity_list):
-                            for tt, Tdust_mod in enumerate(Tdust_mod_list):
-                                td = Tdust_mod[0]
-                                luminosity = 1e9 # Luminosity without Tgrad is not relevant
-                                model_name_list = ['mhc3n_r'+'%1.1f' % profile +'_n'+'%1.2E' % start_dens +'_T'+'%1.f' % td+'.inp'] # With the .inp
-                                print '\n\tStart Density: '+'%1.3E'  % start_dens
-                                print '\tProfile: '+'%1.3E'  % profile
-                                if build_from_abun==False:
-                                    print '\tNd: '+'%1.3E'  % ref_coldust+'\tNHC3N: '+'%1.3E'  % ref_colmol
-                                else:
-                                    Ndddd = rnube*ref_coldust*start_dens
-                                    Nmolll = rnube*ref_colmol*start_dens
-                                    print '\tXd: '+'%1.3E'  % ref_coldust+'\tXHC3N: '+'%1.3E'  % ref_colmol
-                                    print '\tNd: '+'%1.3E'  % Ndddd+'\tNHC3N: '+'%1.3E'  % Nmolll
-                                    
-                                print '\tLuminosity: '+'%1.3E'  % luminosity
-                                a = models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
-                                               gradient, Tdust_mod, vturbulence, factor_names, factors_array,
-                                               run_ref_only, plot_profiles, plot_SED,
-                                               model_name_list, results_path, build_from_abun, only_pars=get_pars_only
-                                               )
-                                a = 0
-                                gc.collect()
-                                print '\tMemory Usage:'+str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-                                
-    
+    if gradient == True:
+        # Look hc3n_modelling previous versions
+        print('Nothing to do')
     elif gradient == 'manual_dens':
-        # Densities by hand
+        """
+        Specifying density in each shell
+        """
         version = version + '_tcte_T'
         if abun_from_col == True and build_from_abun==True:
+            # Calculates the abundances of the molecule and dust given a certain 
+            # reference column for the molecule and dust
             decimals = 1
             ref_colmol_list = obs_col
             ref_coldust_list = dust_col
             string = 'X'
         else:
             string = 'N'
-        
         for r, profile in enumerate(profile_list):
+            # Loop through density profiles ## Creo que solo vale con 0.0
             for tt, Tdust_mod in enumerate(Tdust_mod_list):
+                # Loop through dust temperatures (Tdust = Tkin)
                 td = Tdust_mod[0]
-                ## Results path
+                # Writting Results path
                 results_path = '/Users/frico/Documents/Ed/modelos_hc3n/v'+version+'/r_'+'%1.1f' % profile +'/r_'+'%1.1f' % profile +'_T'+'%1.f'  % td
                 for ro, start_dens in enumerate(start_dens_list):
+                    # Loop through densities ### MIRAR si vale con perfil de densidad
                         for cd, ref_coldust in enumerate(ref_coldust_list):
+                            
+                            # Getting dust abundances given certain column density and density
                             abun_d = ref_coldust/(start_dens*rnube)
+                            # rRunding exponential numbers
                             abund_dust = utiles.rounding_exp(abun_d, decimals)
-                            print abund_dust
                             
                             # Removing previous model summary if only updating pars summary
                             if os.path.isdir(results_path):
                                 if get_pars_only == True:
                                     for f, factor in enumerate(factors_array):
                                         os.rename(results_path+'/models_summary_'+factor_names[f]+'.txt', results_path+'/models_summary_'+factor_names[f]+'_old.txt')
+                           
+                            
                             for cm, ref_colmol in enumerate(ref_colmol_list):
+                                # Loop through desired molecule densities
+                                # Getting molecule abundances given certain column density and density
                                 abun = ref_colmol/(start_dens*rnube)
                                 abund_hc3n = utiles.rounding_exp(abun, decimals)
-                                print '\n++++++++++'
-                                print abund_hc3n
-                                print '+++++++++++++'
-                                #for lum, luminosity in enumerate(luminosity_list):
-                                #for tt, Tdust_mod in enumerate(Tdust_mod_list):
-                                
+                                print('\n++++++++++')
+                                print(abund_hc3n)
+                                print('+++++++++++++')
                                 luminosity = 1e9 # Luminosity without Tgrad is not relevant
                                 model_name_list = ['mhc3n_r'+'%1.1f' % profile +'_Nd'+'%1.2E' % ref_coldust+'_X'+'%1.2E' % abund_hc3n +'_nH'+'%1.2E' % start_dens+'.inp'] # With the .inp
-                                print '\n\tStart Density: '+'%1.3E'  % start_dens
-                                print '\tProfile: '+'%1.3E'  % profile
-                                print '\tNd: '+'%1.3E'  % abund_dust+'\tNHC3N: '+'%1.3E'  % abund_hc3n
+                                print('\n\tStart Density: '+'%1.3E'  % start_dens)
+                                print('\tProfile: '+'%1.3E'  % profile)
+                                print('\tNd: '+'%1.3E'  % abund_dust+'\tNHC3N: '+'%1.3E'  % abund_hc3n)
                                 Ndddd = rnube*abund_dust*start_dens
                                 Nmolll = rnube*abund_hc3n*start_dens
-                                print '\tXd: '+'%1.3E'  % abund_dust+'\tXHC3N: '+'%1.3E'  % abund_hc3n
-                                print '\tNd: '+'%1.3E'  % Ndddd+'\tNHC3N: '+'%1.3E'  % Nmolll
-                                    
-                                print '\tLuminosity: '+'%1.3E'  % luminosity
+                                print('\tXd: '+'%1.3E'  % abund_dust+'\tXHC3N: '+'%1.3E'  % abund_hc3n)
+                                print('\tNd: '+'%1.3E'  % Ndddd+'\tNHC3N: '+'%1.3E'  % Nmolll)
+                                print('\tLuminosity: '+'%1.3E'  % luminosity)
                                 a = models_run(start_dens, profile, abund_dust, abund_hc3n, luminosity,
                                                gradient, Tdust_mod, vturbulence, factor_names, factors_array,
                                                run_ref_only, plot_profiles, plot_SED,
@@ -575,48 +433,10 @@ if modelling == True:
                                                )
                                 a = 0
                                 gc.collect()
-                                print '\tMemory Usage:'+str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-    else:     
-        version = version + '_tconst'
-        luminosity = [1e9] # Luminosity without Tgrad is not relevant
-        if build_from_abun==True: # Building from abundances
-            ref_colmol_list = abund_hc3n_list
-            ref_coldust_list = abund_dust_list
-            string = 'X'
-        else:
-            string = 'N'
-        for tt, Tdust_mod in enumerate(Tdust_mod_list):
-            for ro, start_dens in enumerate(start_dens_list):
-                    for r, profile in enumerate(profile_list):
-                        ## Results path
-                        results_path = '/Users/frico/Documents/Ed/modelos_hc3n/v'+version+'/r_'+str(profile)+'_t'+str(Tdust_mod) # Or Tdust if n is profile
-                        # Removing previous model summary if only updating pars summary
-                        if get_pars_only == True:
-                            for f, factor in enumerate(factors_array):
-                                os.rename(results_path+'/models_summary_'+factor_names[f]+'.txt', results_path+'/models_summary_'+factor_names[f]+'_old.txt')
-                        for cd, ref_coldust in enumerate(ref_coldust_list):
-                            for cm, ref_colmol in enumerate(ref_colmol_list):
-                                ## Model name (if building from 0)
-                                model_name_list = ['mhc3n_r'+str(profile)+'_n'+'%1.2E' % start_dens +'_t'+str(Tdust_mod)+'_'+string+str(cm)+'.inp'] # With the .inp
-                                for lum, luminosity in enumerate(luminosity_list):
-                                    print '\n\tStart Density: '+'%1.3E'  % start_dens
-                                    print '\tProfile: '+'%1.3E'  % profile
-                                    if build_from_abun==False:
-                                        print '\tNd: '+'%1.3E'  % ref_coldust+'\tNHC3N: '+'%1.3E'  % ref_colmol
-                                    else:
-                                        Ndddd = rnube*ref_coldust*start_dens
-                                        Nmolll = rnube*ref_colmol*start_dens
-                                        print '\tXd: '+'%1.3E'  % ref_coldust+'\tXHC3N: '+'%1.3E'  % ref_colmol
-                                    print '\tNd: '+'%1.3E'  % Ndddd+'\tNHC3N: '+'%1.3E'  % Nmolll
-                                    print '\tLuminosity: '+'%1.3E'  % luminosity
-                                    a = models_run(start_dens, profile, ref_coldust, ref_colmol, luminosity,
-                                                   gradient, Tdust_mod, vturbulence, factor_names, factors_array,
-                                                   run_ref_only, plot_profiles, plot_SED,
-                                                   model_name_list, results_path, build_from_abun, only_pars=get_pars_only
-                                                   )
-                                    a = 0
-                                    gc.collect()
-                                    print '\tMemory Usage:'+str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+                                print('\tMemory Usage:'+str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss))
+                                    
+                                    
+                                    
 # =============================================================================
 # Observed values MADCUBA
 # =============================================================================
